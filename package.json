@@ -1,0 +1,50 @@
+{
+  "name": "docker-app-wrapper",
+  "version": "0.0.1",
+  "description": "",
+  "bin": "dist/index.js",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && babel src --out-dir dist",
+    "start": "node dist/index.js",
+    "start-local": "npm run build && npm start",
+    "watch": "npm-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ironman9967/docker-app-wrapper.git"
+  },
+  "author": "Tyson Hester",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ironman9967/docker-app-wrapper/issues"
+  },
+  "homepage": "https://github.com/ironman9967/docker-app-wrapper#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@hapi/hapi": "^20.0.3",
+    "create-subject-with-filter": "0.0.5",
+    "node-fetch": "^2.6.1",
+    "semver-compare": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "npm-watch": "^0.7.0"
+  },
+  "watch": {
+    "start-local": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
+}
