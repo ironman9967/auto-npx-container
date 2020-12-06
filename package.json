@@ -1,6 +1,6 @@
 {
-  "name": "docker-app-wrapper",
-  "version": "0.0.1",
+  "name": "auto-npx-container",
+  "version": "0.1.0",
   "description": "",
   "bin": "dist/index.js",
   "main": "dist/index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ironman9967/docker-app-wrapper.git"
+    "url": "git+https://github.com/ironman9967/auto-npx-container.git"
   },
   "author": "Tyson Hester",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ironman9967/docker-app-wrapper/issues"
+    "url": "https://github.com/ironman9967/auto-npx-container/issues"
   },
-  "homepage": "https://github.com/ironman9967/docker-app-wrapper#readme",
+  "homepage": "https://github.com/ironman9967/auto-npx-container#readme",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@hapi/hapi": "^20.0.3",
