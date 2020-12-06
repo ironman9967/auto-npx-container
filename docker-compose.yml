@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  anctest:
+    build: .
+    restart: always
+    environment:
+      AUTO_NPX_CONTAINER_MODULE_NAME: "ledsrv-test-docker-app"
+      AUTO_NPX_CONTAINER_DELAY: 30000
+      AUTO_NPX_CONTAINER_KILL_SIGNAL: 'SIGTERM'
+      AUTO_NPX_CONTAINER_DEBUG: 1
+      PORT: 9000
+    ports:
+      - "9000:9000"

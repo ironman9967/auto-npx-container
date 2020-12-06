@@ -16,19 +16,19 @@ createModuleLoader({
     }),
     cpSpawn,
     moduleName: process.env.AUTO_NPX_CONTAINER_MODULE_NAME || 'ledsrv-test-docker-app',
-    delay: process.env.AUTO_NPX_CONTAINER_DELAY || 15 * 60 * 1000,
-    debug: process.env.AUTO_NPX_CONTAINER_DEBUG || 0
+    delay: 15000 || process.env.AUTO_NPX_CONTAINER_DELAY || 15 * 60 * 1000,
+    killSignal: 'SIGTERM' || process.env.AUTO_NPX_CONTAINER_KILL_SIGNAL || 'SIGINT',
+    debug: 1 || process.env.AUTO_NPX_CONTAINER_DEBUG || 0
 })
-.then(({ debug, onCheck, dispose }) => {
+.then(({ debug, killSignal, onCheck, dispose }) => {
     let unsubOnCheck = () => {}
-    if (debug) {
-        const { unsubscribe } = onCheck(moduleMeta => 
-            console.log('version checked', { moduleMeta }))
-        unsubOnCheck = unsubscribe
-    }
-    process.once('SIGINT', () => {
+    // if (debug) {
+    //     const { unsubscribe } = onCheck(moduleMeta => 
+    //         console.log('version checked', { moduleMeta }))
+    //     unsubOnCheck = unsubscribe
+    // }
+    process.once(killSignal, () => {
         unsubOnCheck()
         dispose().then(() => process.exit(0))
     })
 })
-    

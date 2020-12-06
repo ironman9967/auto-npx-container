@@ -6,6 +6,7 @@ export const create = ({
     onCheck,
     moduleName, 
     delay = 15 * 60 * 1000,
+    killSignal = 'SIGINT',
     debug = 0
 }) => {
     let proc
@@ -13,14 +14,24 @@ export const create = ({
         ? console.log.apply(null, args)
         : void 0
     log('version check interval', delay)
+    log('kill signal', killSignal)
     const stop = () => {
-        const prom = new Promise(r => proc.once('close', () => {
-            log('module closed')
-            proc = void 0
-            r()
-        }))
-        log('stopping - sending SIGINT to module')
-        proc.kill('SIGINT')
+        const prom = new Promise(r => {
+            proc.once('close', () => {
+                log('module closed')
+                proc.removeAllListeners('exit')
+                proc = void 0
+                r()
+            })
+            proc.once('exit', () => {
+                log('module exited')
+                proc.removeAllListeners('close')
+                proc = void 0
+                r()
+            })
+        })
+        log(`stopping - sending ${killSignal} to pid ${proc.pid}`)
+        proc.kill(killSignal)
         return prom
     }
     const { unsubscribe: dispose } = onNewVersion(({ 
@@ -42,6 +53,7 @@ export const create = ({
     })
     return monitor(moduleName, delay).then(interval => ({
         debug: debug == 1,
+        killSignal,
         onCheck,
         dispose: () => {
             log('disposing...')
